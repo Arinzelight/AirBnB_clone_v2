@@ -22,6 +22,11 @@ def do_pack():
     if os.path.isdir("versions") is False:
         if local("mkdir -p versions").failed is True:
             return None
+
+    # Include my_index.html in the archive
+    if local("cp web_static/my_index.html web_static/").failed is True:
+        return None
+
     if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
     return file
@@ -74,3 +79,4 @@ def deploy():
     if file is None:
         return False
     return do_deploy(file)
+
